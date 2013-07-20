@@ -1,3 +1,9 @@
+python-afs (0.1.2-1) precise; urgency=low
+
+  * Make _init global inside of pyafs_error. (How did this ever work?)
+
+ -- Alexander Chernyakhovsky <achernya@mit.edu>  Sat, 20 Jul 2013 19:49:52 -0400
+
 python-afs (0.1.1-2) precise; urgency=low
 
   * Updating version for precise migration.
