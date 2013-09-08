@@ -1,9 +1,9 @@
 Source: python-afs
 Section: python
 Priority: extra
-Maintainer: Evan Broder <broder@mit.edu>
-Build-Depends: cdbs, debhelper, python-all-dev, python-support, cython, python-setuptools, libopenafs-dev, libkrb5-dev
-Standards-Version: 3.8.3
+Maintainer: Debathena Project <debathena@mit.edu>
+Build-Depends: debhelper (>= 7), python-all-dev, python-support, cython, python-setuptools, libopenafs-dev, libkrb5-dev
+Standards-Version: 3.9.3
 
 Package: python-afs
 Architecture: any
