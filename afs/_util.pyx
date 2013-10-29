@@ -12,13 +12,16 @@ cdef int _init = 0
 
 # pioctl convenience wrappers
 
-cdef extern int pioctl_read(char *dir, afs_int32 op, void *buffer, unsigned short size, afs_int32 follow) except -1:
+# Function for "reading" data from a pioctl
+# "outbuffer" will get populated with the data in question
+cdef extern int pioctl_read(char *path, afs_int32 op, void *outbuffer,
+                            unsigned short size, afs_int32 follow) except -1:
     cdef ViceIoctl blob
     cdef afs_int32 code
     blob.in_size  = 0
     blob.out_size = size
-    blob.out = buffer
-    code = pioctl(dir, op, &blob, follow)
+    blob.out = outbuffer
+    code = pioctl(path, op, &blob, follow)
     # This might work with the rest of OpenAFS, but I'm not convinced
     # the rest of it is consistent
     if code == -1:
@@ -26,13 +29,22 @@ cdef extern int pioctl_read(char *dir, afs_int32 op, void *buffer, unsigned shor
     pyafs_error(code)
     return code
 
-cdef extern int pioctl_write(char *dir, afs_int32 op, char *buffer, afs_int32 follow) except -1:
+# Function for "writing" data to a pioctl
+# "outbuffer" will get populated with the data in question
+# Pass NULL for outbuffer in cases where we don't get anything
+# back (e.g. VIOCSETAL)
+cdef extern int pioctl_write(char *path, afs_int32 op, char *inbuffer,
+                             void *outbuffer, afs_int32 follow) except -1:
     cdef ViceIoctl blob
     cdef afs_int32 code
-    blob.cin = buffer
-    blob.in_size = 1 + strlen(buffer)
-    blob.out_size = 0
-    code = pioctl(dir, op, &blob, follow)
+    blob.cin = inbuffer
+    blob.in_size = 1 + strlen(inbuffer)
+    if outbuffer == NULL:
+        blob.out_size = 0
+    else:
+        blob.out_size = AFS_PIOCTL_MAXSIZE
+        blob.out = outbuffer
+    code = pioctl(path, op, &blob, follow)
     # This might work with the rest of OpenAFS, but I'm not convinced
     # the rest of it is consistent
     if code == -1:

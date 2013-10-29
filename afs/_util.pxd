@@ -24,12 +24,18 @@ cdef extern from "netinet/in.h":
         in_addr sin_addr
         char sin_zero[8]
 
+# Note that even on 64-bit platforms, Pyrex/Cython's long is 4 bytes,
+# and unsigned long is 8, so this works.
 cdef extern from "afs/stds.h":
     ctypedef unsigned long afs_uint32
     ctypedef long afs_int32
 
 cdef extern from "afs/dirpath.h":
     char * AFSDIR_CLIENT_ETC_DIRPATH
+
+cdef extern from "afs/afs_consts.h":
+    enum:
+        AFS_PIOCTL_MAXSIZE
 
 cdef extern from "afs/cellconfig.h":
     enum:
@@ -163,5 +169,5 @@ cdef extern from "afs/venus.h":
 # pioctl doesn't actually have a header, so we have to define it here
 cdef extern int pioctl(char *, afs_int32, ViceIoctl *, afs_int32)
 cdef int pioctl_read(char *, afs_int32, void *, unsigned short, afs_int32) except -1
-cdef int pioctl_write(char *, afs_int32, char *, afs_int32) except -1
+cdef int pioctl_write(char *, afs_int32, char *, void *, afs_int32) except -1
 
