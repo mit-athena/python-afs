@@ -1,5 +1,7 @@
 from afs._util cimport *
 from afs._util import pyafs_error
+import socket
+import struct
 
 __all__ = ['whichcell',
            '_lsmount',
@@ -82,3 +84,30 @@ def _fid(char *path):
     py_fid['Unique'] = vfid.Fid.Unique
     py_fid['Cell'] = vfid.Cell
     return py_fid
+
+def _whereis(char* path):
+    """
+    _whereis(path) -> list()
+
+    Low-level implementation of the "whereis" command.  Raises
+    OSError, and EINVAL usually indicates the path isn't in AFS.
+    Returns a list of IP addresses.  It is the caller's responsibility
+    to get hostnames if that's desired.  If anything goes wrong converting
+    the 32-bit network numbers into IP addresses, that network number is
+    skipped.  That's probably less than ideal.
+    """
+    cdef char whereis_buf[AFS_PIOCTL_MAXSIZE]
+    cdef object py_result
+
+    py_result = list()
+    pioctl_read(path, VIOCWHEREIS, whereis_buf, sizeof(whereis_buf), 1)
+    hosts = <afs_uint32 *>whereis_buf
+    for j in range(0, AFS_MAXHOSTS):
+        if hosts[j] == 0:
+            break
+        try:
+            py_result.append(socket.inet_ntoa(struct.pack('!L', socket.htonl(hosts[j]))))
+        except:
+            # Oh well
+            pass
+    return py_result

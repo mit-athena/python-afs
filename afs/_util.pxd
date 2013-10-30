@@ -36,6 +36,7 @@ cdef extern from "afs/dirpath.h":
 cdef extern from "afs/afs_consts.h":
     enum:
         AFS_PIOCTL_MAXSIZE
+        AFS_MAXHOSTS
 
 cdef extern from "afs/cellconfig.h":
     enum:
@@ -165,7 +166,7 @@ cdef extern from "afs/venus.h":
     enum:
         # PIOCTLS to Venus that we use
         VIOCGETAL, VIOC_GETVCXSTATUS2, VIOCSETAL, VIOC_FILE_CELL_NAME,
-        VIOC_AFS_STAT_MT_PT, VIOCGETVOLSTAT, VIOCGETFID
+        VIOC_AFS_STAT_MT_PT, VIOCGETVOLSTAT, VIOCGETFID, VIOCWHEREIS,
 
 # This is probably a terrible idea, since afsint.h is generated,
 # Specifically, the "real" definition is in afsint.xg, but this
