@@ -51,7 +51,7 @@ cdef extern int pioctl_write(char *path, afs_int32 op, char *inbuffer,
         log.debug("No output desired from pioctl_write()")
         blob.out_size = 0
     else:
-        blob.out_size = AFS_PIOCTL_MAXSIZE
+        blob.out_size = sizeof(outbuffer)
         blob.out = outbuffer
     code = pioctl(path, op, &blob, follow)
     log.debug("pioctl_write() returned %d", code)
