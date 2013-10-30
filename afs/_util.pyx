@@ -3,6 +3,9 @@ General PyAFS utilities, such as error handling
 """
 
 import sys
+import logging
+
+log = logging.getLogger('afs._util')
 
 # otherwise certain headers are unhappy
 cdef extern from "netinet/in.h": pass
@@ -18,10 +21,13 @@ cdef extern int pioctl_read(char *path, afs_int32 op, void *outbuffer,
                             unsigned short size, afs_int32 follow) except -1:
     cdef ViceIoctl blob
     cdef afs_int32 code
+    log.debug("pioctl_read() on %s with operation %d and size %d",
+              path, op, size)
     blob.in_size  = 0
     blob.out_size = size
     blob.out = outbuffer
     code = pioctl(path, op, &blob, follow)
+    log.debug("pioctl_read() returned %d", code)
     # This might work with the rest of OpenAFS, but I'm not convinced
     # the rest of it is consistent
     if code == -1:
@@ -39,12 +45,16 @@ cdef extern int pioctl_write(char *path, afs_int32 op, char *inbuffer,
     cdef afs_int32 code
     blob.cin = inbuffer
     blob.in_size = 1 + strlen(inbuffer)
+    log.debug("pioctl_write() on %s with operation %d, and input '%s'",
+              path, op, inbuffer)
     if outbuffer == NULL:
+        log.debug("No output desired from pioctl_write()")
         blob.out_size = 0
     else:
         blob.out_size = AFS_PIOCTL_MAXSIZE
         blob.out = outbuffer
     code = pioctl(path, op, &blob, follow)
+    log.debug("pioctl_write() returned %d", code)
     # This might work with the rest of OpenAFS, but I'm not convinced
     # the rest of it is consistent
     if code == -1:

@@ -2,6 +2,9 @@ from afs._util cimport *
 from afs._util import pyafs_error
 import socket
 import struct
+import logging
+
+log = logging.getLogger('afs._fs')
 
 __all__ = ['whichcell',
            '_lsmount',
@@ -107,7 +110,6 @@ def _whereis(char* path):
             break
         try:
             py_result.append(socket.inet_ntoa(struct.pack('!L', socket.htonl(hosts[j]))))
-        except:
-            # Oh well
-            pass
+        except Exception as e:
+            log.warning("Attempt to convert %d to IP address raised %s: %s", hosts[j], e.__class__.__name__, e)
     return py_result
