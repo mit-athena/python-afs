@@ -1,12 +1,21 @@
 import errno
 import os.path
 from afs import _fs
-from afs._fs import *
+
+def whichcell(path):
+    """Return the cell name or None if the path is not in AFS"""
+    try:
+        return _fs.whichcell(path)
+    except OSError as e:
+        if e.errno == errno.EINVAL:
+            return None
+        else:
+            raise
 
 def inafs(path):
     """Return True if a path is in AFS."""
     try:
-        whichcell(path)
+        _fs.whichcell(path)
     except OSError, e:
         if e.errno in (errno.EINVAL, errno.ENOENT):
             return False
@@ -20,7 +29,7 @@ def lsmount(path):
     # strip off any trailing slash
     (dirname, basename) = os.path.split(os.path.realpath(path))
     try:
-        return _lsmount(dirname, basename)
+        return _fs._lsmount(dirname, basename)
     except OSError as e:
         if e.errno == errno.EINVAL:
             return None

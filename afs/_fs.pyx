@@ -6,10 +6,6 @@ import logging
 
 log = logging.getLogger('afs._fs')
 
-__all__ = ['whichcell',
-           '_lsmount',
-           ]
-
 def whichcell(char* path):
     """
     whichcell(path) -> str
