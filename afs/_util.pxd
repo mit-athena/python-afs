@@ -165,7 +165,37 @@ cdef extern from "afs/venus.h":
     enum:
         # PIOCTLS to Venus that we use
         VIOCGETAL, VIOC_GETVCXSTATUS2, VIOCSETAL, VIOC_FILE_CELL_NAME,
-        VIOC_AFS_STAT_MT_PT
+        VIOC_AFS_STAT_MT_PT, VIOCGETVOLSTAT, VIOCGETFID
+
+# This is probably a terrible idea, since afsint.h is generated,
+# Specifically, the "real" definition is in afsint.xg, but this
+# should work across Linuxen
+cdef extern from "afs/afsint.h":
+    ctypedef struct VolumeStatus:
+        afs_int32 Vid
+        afs_int32 ParentId
+        char Online
+        char InService
+        char Blessed
+        char NeedsSalvage
+        afs_int32 Type
+        afs_int32 MinQuota
+        afs_int32 MaxQuota
+        afs_int32 BlocksInUse
+        afs_int32 PartBlocksAvail
+        afs_int32 PartMaxBlocks
+
+    ctypedef struct AFSFid:
+        afs_uint32 Volume
+        afs_uint32 Vnode
+        afs_uint32 Unique
+
+# This is from afs.h, but it's in the kernel-only part
+# and Pyrex/Cython is unhappy.  So we re-define it here,
+# just like they do in venus/fs.c.
+cdef struct VenusFid:
+    afs_int32 Cell
+    AFSFid Fid
 
 # pioctl doesn't actually have a header, so we have to define it here
 cdef extern int pioctl(char *, afs_int32, ViceIoctl *, afs_int32)
