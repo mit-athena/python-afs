@@ -164,7 +164,8 @@ cdef extern from "afs/vice.h":
 cdef extern from "afs/venus.h":
     enum:
         # PIOCTLS to Venus that we use
-        VIOCGETAL, VIOC_GETVCXSTATUS2, VIOCSETAL, VIOC_FILE_CELL_NAME
+        VIOCGETAL, VIOC_GETVCXSTATUS2, VIOCSETAL, VIOC_FILE_CELL_NAME,
+        VIOC_AFS_STAT_MT_PT
 
 # pioctl doesn't actually have a header, so we have to define it here
 cdef extern int pioctl(char *, afs_int32, ViceIoctl *, afs_int32)
