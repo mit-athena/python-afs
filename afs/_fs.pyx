@@ -11,7 +11,11 @@ __all__ = ['whichcell',
            ]
 
 def whichcell(char* path):
-    """Determine which AFS cell a particular path is in."""
+    """
+    whichcell(path) -> str
+
+    Determine which AFS cell a particular path is in.
+    """
     cdef char cell[MAXCELLCHARS]
 
     pioctl_read(path, VIOC_FILE_CELL_NAME, cell, sizeof(cell), 1)
@@ -19,7 +23,7 @@ def whichcell(char* path):
 
 def _lsmount(char* parent, char* path):
     """
-    lsmount(parent, path) -> str
+    _lsmount(parent, path) -> str
 
     Given the parent directory, and a path, return the name of the
     volume.  Raises OSError.
