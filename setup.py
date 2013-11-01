@@ -1,9 +1,12 @@
 #!/usr/bin/python
 
+import sys
+if sys.hexversion < 0x020600f0:
+    sys.exit("Python 2.6 or higher is required.")
+
 from distutils.core import setup
 from distutils.extension import Extension
 from Cython.Distutils import build_ext
-import sys
 import os
 
 for root in ['/Library/OpenAFS/Tools',
