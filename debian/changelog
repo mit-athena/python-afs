@@ -1,3 +1,10 @@
+python-afs (0.2.0-1) unstable; urgency=low
+
+  * Release a new version, with an afs.fs module that actually does stuff
+  * Require python 2.6 because it's not 2007 anymore.
+
+ -- Jonathan Reed <jdreed@mit.edu>  Fri, 01 Nov 2013 14:22:38 -0400
+
 python-afs (0.1.2-1) precise; urgency=low
 
   * Make _init global inside of pyafs_error. (How did this ever work?)
