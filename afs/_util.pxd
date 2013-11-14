@@ -24,8 +24,11 @@ cdef extern from "netinet/in.h":
         in_addr sin_addr
         char sin_zero[8]
 
-# Note that even on 64-bit platforms, Pyrex/Cython's long is 4 bytes,
-# and unsigned long is 8, so this works.
+# Note that these are in an "extern", so the resulting C code will use
+# the actual type definitions in the header file.  The ctypedef here
+# controls C<->Python conversion, ensuring afs_uint32 will turn into a
+# Python long and afs_int32 will turn into a Python int.  This is
+# really only relevant for 32-bit interpreters.
 cdef extern from "afs/stds.h":
     ctypedef unsigned long afs_uint32
     ctypedef long afs_int32
