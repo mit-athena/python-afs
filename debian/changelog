@@ -2,8 +2,9 @@ python-afs (0.2.0-1) unstable; urgency=low
 
   * Release a new version, with an afs.fs module that actually does stuff
   * Require python 2.6 because it's not 2007 anymore.
+  * Drop support for versions of OpenAFS before 1.6.0
 
- -- Jonathan Reed <jdreed@mit.edu>  Fri, 01 Nov 2013 14:22:38 -0400
+ -- Jonathan Reed <jdreed@mit.edu>  Mon, 18 Nov 2013 11:46:24 -0500
 
 python-afs (0.1.2-1) precise; urgency=low
 
