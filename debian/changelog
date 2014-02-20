@@ -1,3 +1,11 @@
+python-afs (0.2.1-1) unstable; urgency=low
+
+  * Add git-buildpackage configuration
+  * Set source format to 3.0 (quilt)
+  * Release 0.2.1, which fixes a bug in pioctl_write
+
+ -- Jonathan Reed <jdreed@mit.edu>  Thu, 20 Feb 2014 13:26:24 -0500
+
 python-afs (0.2.0-1) unstable; urgency=low
 
   * Release a new version, with an afs.fs module that actually does stuff
