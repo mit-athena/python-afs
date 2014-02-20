@@ -45,4 +45,4 @@ def getCallerAccess(char *dir, int follow=1):
     return stat.callerAccess
 
 def setAcl(char* dir, char* acl, int follow=1):
-    pioctl_write(dir, VIOCSETAL, acl, NULL, follow)
+    pioctl_write(dir, VIOCSETAL, acl, NULL, 0, follow)

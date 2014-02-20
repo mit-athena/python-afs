@@ -39,8 +39,10 @@ cdef extern int pioctl_read(char *path, afs_int32 op, void *outbuffer,
 # "outbuffer" will get populated with the data in question
 # Pass NULL for outbuffer in cases where we don't get anything
 # back (e.g. VIOCSETAL)
+# "outsize" will be ignored (forced to 0) if "outbuffer" is NULL
 cdef extern int pioctl_write(char *path, afs_int32 op, char *inbuffer,
-                             void *outbuffer, afs_int32 follow) except -1:
+                             void *outbuffer, afs_int32 outsize,
+                             afs_int32 follow) except -1:
     cdef ViceIoctl blob
     cdef afs_int32 code
     blob.cin = inbuffer
@@ -51,7 +53,7 @@ cdef extern int pioctl_write(char *path, afs_int32 op, char *inbuffer,
         log.debug("No output desired from pioctl_write()")
         blob.out_size = 0
     else:
-        blob.out_size = sizeof(outbuffer)
+        blob.out_size = outsize
         blob.out = outbuffer
     code = pioctl(path, op, &blob, follow)
     log.debug("pioctl_write() returned %d", code)

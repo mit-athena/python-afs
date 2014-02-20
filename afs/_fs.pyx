@@ -26,7 +26,7 @@ def _lsmount(char* parent, char* path):
     """
     cdef char mtpt[AFS_PIOCTL_MAXSIZE]
 
-    pioctl_write(parent, VIOC_AFS_STAT_MT_PT, path, mtpt, 1)
+    pioctl_write(parent, VIOC_AFS_STAT_MT_PT, path, mtpt, sizeof(mtpt), 1)
     return mtpt
 
 def _volume_status(char* path):
