@@ -27,11 +27,13 @@ cdef extern int pioctl_read(char *path, afs_int32 op, void *outbuffer,
     blob.out_size = size
     blob.out = outbuffer
     code = pioctl(path, op, &blob, follow)
-    log.debug("pioctl_read() returned %d", code)
+    # If we don't save errno here, logging scribbles over it
+    save_errno = errno
+    log.debug("pioctl_read() returned %d (save_errno %d)", code, save_errno)
     # This might work with the rest of OpenAFS, but I'm not convinced
     # the rest of it is consistent
     if code == -1:
-        raise OSError(errno, strerror(errno))
+        raise OSError(save_errno, strerror(save_errno))
     pyafs_error(code)
     return code
 
@@ -56,11 +58,13 @@ cdef extern int pioctl_write(char *path, afs_int32 op, char *inbuffer,
         blob.out_size = outsize
         blob.out = outbuffer
     code = pioctl(path, op, &blob, follow)
-    log.debug("pioctl_write() returned %d", code)
+    # If we don't save errno here, logging scribbles over it
+    save_errno = errno
+    log.debug("pioctl_write() returned %d (errno %d)", code, save_errno)
     # This might work with the rest of OpenAFS, but I'm not convinced
     # the rest of it is consistent
     if code == -1:
-        raise OSError(errno, strerror(errno))
+        raise OSError(save_errno, strerror(save_errno))
     pyafs_error(code)
     return code
 
