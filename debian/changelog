@@ -1,3 +1,9 @@
+python-afs (0.2.2-1) unstable; urgency=low
+
+  * Don't let other things scribble over errno in the pioctl wrappers
+
+ -- Jonathan Reed <jdreed@mit.edu>  Fri, 21 Feb 2014 12:07:11 -0500
+
 python-afs (0.2.1-1) unstable; urgency=low
 
   * Add git-buildpackage configuration
