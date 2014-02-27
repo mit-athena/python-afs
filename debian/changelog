@@ -1,3 +1,9 @@
+python-afs (0.2.2-0debathena2) unstable; urgency=low
+
+  * Actually set the source format to 3.0 (quilt)
+
+ -- Jonathan Reed <jdreed@mit.edu>  Thu, 27 Feb 2014 09:50:54 -0500
+
 python-afs (0.2.2-0debathena1) unstable; urgency=low
 
   * Don't let other things scribble over errno in the pioctl wrappers
