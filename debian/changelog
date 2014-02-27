@@ -1,8 +1,10 @@
-python-afs (0.2.2-1) unstable; urgency=low
+python-afs (0.2.2-0debathena1) unstable; urgency=low
 
   * Don't let other things scribble over errno in the pioctl wrappers
+  * Update debian_revision part of version number to Debathena convention.
+    This should have been updated when we took over packaging from Evan.
 
- -- Jonathan Reed <jdreed@mit.edu>  Fri, 21 Feb 2014 12:07:11 -0500
+ -- Jonathan Reed <jdreed@mit.edu>  Thu, 27 Feb 2014 09:35:24 -0500
 
 python-afs (0.2.1-1) unstable; urgency=low
 
