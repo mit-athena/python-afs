@@ -1,3 +1,9 @@
+python-afs (0.2.2-0debathena3) unstable; urgency=medium
+
+  * Replace python-support with dh_python2.
+
+ -- Anders Kaseorg <andersk@mit.edu>  Mon, 27 Jun 2016 01:52:17 -0400
+
 python-afs (0.2.2-0debathena2) unstable; urgency=low
 
   * Actually set the source format to 3.0 (quilt)
